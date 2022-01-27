@@ -22,3 +22,4 @@ class SharedPreferencesManager(val actividad: Activity) :
         return (email to clave)
     }
 }
+

@@ -20,7 +20,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         //Inicialización de variables
-        manejadorArchivo = SharedPreferencesManager(this)
+        //manejadorArchivo = SharedPreferencesManager(this)
+        manejadorArchivo = EncriptedSharedPreferencesManager(this)
         editTextEmail = findViewById(R.id.editTextEmail)
         editTextPassword = findViewById(R.id.editTextPassword)
         buttonLogin = findViewById(R.id.buttonLogin)
