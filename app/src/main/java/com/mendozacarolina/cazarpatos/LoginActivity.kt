@@ -1,11 +1,16 @@
 package com.mendozacarolina.cazarpatos
 import android.content.Intent
 import android.media.MediaPlayer
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+
 
 class LoginActivity : AppCompatActivity() {
     lateinit var manejadorArchivo: FileHandler
@@ -15,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var buttonNewUser:Button
     lateinit var mediaPlayer:MediaPlayer
     lateinit var checkBoxRecordarme: CheckBox
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +35,10 @@ class LoginActivity : AppCompatActivity() {
         buttonNewUser = findViewById(R.id.buttonNewUser)
         checkBoxRecordarme = findViewById(R.id.checkBoxRecordarme)
 
+        // Initialize Firebase Auth
+        auth = Firebase.auth
+
+
         LeerDatosDePreferencias()
         //Eventos clic
         buttonLogin.setOnClickListener {
@@ -40,11 +50,11 @@ class LoginActivity : AppCompatActivity() {
 
             //Guardar datos en preferencias.
             GuardarDatosEnPreferencias()
-
             //Si pasa validación de datos requeridos, ir a pantalla principal
-            val intencion = Intent(this, MainActivity::class.java)
-            intencion.putExtra(EXTRA_LOGIN, email)
-            startActivity(intencion)
+            //val intencion = Intent(this, MainActivity::class.java)
+            //intencion.putExtra(EXTRA_LOGIN, email)
+            //startActivity(intencion)
+            AutenticarUsuario(email,clave)
         }
         buttonNewUser.setOnClickListener{
 
@@ -52,6 +62,22 @@ class LoginActivity : AppCompatActivity() {
         mediaPlayer=MediaPlayer.create(this, R.raw.title_screen)
         mediaPlayer.start()
     }
+
+    fun AutenticarUsuario(email:String, password:String){
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    var intent = Intent(this,MainActivity::class.java)
+                    intent.putExtra(LOGIN_KEY,auth.currentUser!!.email)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(baseContext, task.exception!!.message,
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
 
     private fun LeerDatosDePreferencias(){
         val listadoLeido = manejadorArchivo.ReadInformation()

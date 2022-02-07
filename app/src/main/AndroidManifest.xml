@@ -8,7 +8,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CazarPatos.Personalizado">
-        <activity android:name=".RankingActivity"
+
+        <activity
+            android:name=".RankingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,9 +18,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity">
+
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
         </activity>
-        <activity android:name=".MainActivity"></activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+        </activity>
+
     </application>
 </manifest>
 
