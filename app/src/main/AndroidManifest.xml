@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mendozacarolina.cazarpatos">
+
+    <!--Incluir permisos de Google Mobile Ads para correr -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,19 +14,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CazarPatos.Personalizado">
 
+        <!--AdMob app ID: ca-app-pub-2402531890605161~3196330783 -->
+        <meta-data
+        android:name="com.google.android.gms.ads.APPLICATION_ID"
+        android:value="ca-app-pub-2402531890605161~3196330783"/>
+
+
         <activity
             android:name=".RankingActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity">
+        </activity>
+
+        <activity
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true">
         </activity>
 
         <activity
